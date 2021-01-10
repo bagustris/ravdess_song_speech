@@ -100,7 +100,8 @@ JOURNAL NAME.
 
 ## Citation
 Please cite this work as:  
-``` 
-Atmaja, Bagus Tris. A simple scientific paper repository for reproducible research.
-url: https://github.com/bagustris/paper_template, 2020. 
+```
+B. T. Atmaja and M. Akagi, “On The Differences Between Song and Speech Emotion 
+Recognition: Effect of Feature Sets, Feature Types, and Classifiers,” 
+in 2020 IEEE REGION 10 CONFERENCE (TENCON), 2020, pp. 968–972.
 ```
