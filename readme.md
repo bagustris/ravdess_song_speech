@@ -24,8 +24,23 @@ This paper has been submitted for publication in *Some Journal*.
 
 ## Abstract
 
-> Paste here the abstract.
-
+> In this paper, we argue that singing voice (song) is
+> more emotional than speech. We evaluate different features 
+> sets, feature types, and classifiers on both song and 
+> speech emotion recognition. Three feature sets: GeMAPS, 
+> pyAudioAnalysis, and LibROSA; two feature types, low-level 
+> descriptors and high-level statistical functions; and 
+> four classifiers: multilayer perceptron, LSTM, GRU, 
+> and convolution neural networks; are examined on both 
+> song and speech data with the same parameter values. 
+> The results show no remarkable difference between song 
+> and speech data on using the same method. Comparisons of 
+> two results reveal that song is more emotional than speech. 
+> In addition, high-level statistical functions of acoustic 
+> features gained higher performance than low-level 
+> descriptors in this classification task. This result 
+> strengthens the previous finding on the regression task 
+> which reported the advantage use of high-level features.
 
 ## Software implementation
 
