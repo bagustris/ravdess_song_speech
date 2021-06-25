@@ -50,7 +50,7 @@ def parse_audio_files(parent_dir, sub_dirs, file_ext="*.wav"):
             labels = np.append(labels, filename.split('-')[2])  # grab 3rd item
     return np.array(features), np.array(labels, dtype=np.int)
 
-
+# directory dataset
 main_dir = '/media/bagustris/bagus/dataset/Audio_Speech_Actors_01-24/'
 sub_dir = os.listdir(main_dir)
 print("\ncollecting features and labels...")

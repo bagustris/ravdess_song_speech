@@ -101,3 +101,6 @@ cm = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
 print("Accuracy: ", accuracy_score(test_y, y_pred))
 print("UAR: ", cm.trace()/cm.shape[0])
 
+# to plot model
+# plot_model(model, 'model_gru_2.pdf', show_shapes=True,  show_layer_names=False)
+

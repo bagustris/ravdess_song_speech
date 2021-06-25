@@ -6,7 +6,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 from keras.models import Sequential  
-from keras.layers import Dense, Activation, Flatten, CuDNNLSTM, Flatten 
+from keras.layers import Dense, Activation, Flatten, LSTM, Flatten 
 from keras.layers import Dropout, BatchNormalization, Bidirectional
 from keras.callbacks import EarlyStopping, ModelCheckpoint
 from keras.wrappers.scikit_learn import KerasClassifier
@@ -25,23 +25,25 @@ rn.seed(123)
 tf.set_random_seed(123)
 
 # load feature data
-X = np.load('song_librosa.npy')  
-y = np.load('label_gemaps.npy')
+X = np.load('../data/song_librosa.npy')  
+y = np.load('../data/label_gemaps.npy')
 
 # invert labels to 1D label
 label_encoder = LabelEncoder()
 y = label_encoder.fit_transform(np.argmax(y, axis=1))
 
-earlystop = EarlyStopping(monitor='val_loss', patience=50, restore_best_weights=True)
-checkpointer = ModelCheckpoint(filepath='/tmp/weights.hdf5', verbose=1, save_best_only=True)
+earlystop = EarlyStopping(monitor='val_loss', patience=50, 
+restore_best_weights=True)
+checkpointer = ModelCheckpoint(filepath='/tmp/weights.hdf5', verbose=1, 
+save_best_only=True)
 
 # function to define model
 def create_model():  
     model = Sequential()
     model.add(BatchNormalization(axis=-1, input_shape=(X.shape[1], X.shape[2])))
-    model.add(CuDNNLSTM(256, return_sequences=True))  
-    model.add(CuDNNLSTM(256, return_sequences=True))
-    model.add(CuDNNLSTM(256, return_sequences=True))
+    model.add(LSTM(256, return_sequences=True))  
+    model.add(LSTM(256, return_sequences=True))
+    model.add(LSTM(256, return_sequences=True))
     model.add(Flatten())
     model.add(Dropout(0.4))
     model.add(Dense(8, activation='softmax')) #unit must match n classes

@@ -13,6 +13,7 @@ from keras.callbacks import EarlyStopping, ModelCheckpoint
 from keras.wrappers.scikit_learn import KerasClassifier
 from sklearn.model_selection import StratifiedKFold, cross_val_score
 from sklearn.preprocessing import LabelEncoder, StandardScaler
+from sklearn.metrics import accuracy_score
 
 import random as rn
 import tensorflow as tf
@@ -49,52 +50,52 @@ def create_model():
     model.compile(loss='sparse_categorical_crossentropy', optimizer='rmsprop', metrics=['accuracy'])  
     return model
 
-
-# create model
-model = KerasClassifier(build_fn=create_model, epochs=200, batch_size=16, verbose=1)
-
 # evaluate using 5-fold cross validation
-kfold = StratifiedKFold(n_splits=10, shuffle=True, random_state=123)
-results = cross_val_score(model, X, y, cv=kfold)
-print(results.mean())
+# create model
+# model = KerasClassifier(build_fn=create_model, epochs=200, batch_size=16, verbose=1)
 
-# without cross-validation
-#model = create_model()
-#print(model.summary())
-#train_x, test_x, train_y, test_y = train_test_split(X, y, test_size=0.1)
-#hist = model.fit(train_x, train_y, epochs=200, batch_size=16)
+# kfold = StratifiedKFold(n_splits=10, shuffle=True, random_state=123)
+# results = cross_val_score(model, X, y, cv=kfold)
+# print(results.mean())
+
+# without cross-validation, small data -> test size = 10 %
+model = create_model()
+print(model.summary())
+train_x, test_x, train_y, test_y = train_test_split(X, y, test_size=0.1)
+hist = model.fit(train_x, train_y, epochs=20, batch_size=16)
 
 # for calculating confusion_matrix
-#import os
-#from sklearn.metrics import confusion_matrix
-#import seaborn as sns  
-#predict = model.predict(test_x, batch_size=16)
-#emotions=['neutral', 'calm', 'happy', 'sad', 'angry', 'fearful', 'disgust', 'surprised']  
+import os
+from sklearn.metrics import confusion_matrix
+import seaborn as sns  
+predict = model.predict(test_x, batch_size=16)
+emotions=['neutral', 'calm', 'happy', 'sad', 'angry', 'fearful', 'disgust', 'surprised']  
 
-## predicted emotions from the test set  
-#y_pred = np.argmax(predict, 1)  
-#predicted_emo = []   
-#for i in range(0,test_y.shape[0]):  
-#    emo = emotions[y_pred[i]]  
-#    predicted_emo.append(emo)
+# predicted emotions from the test set  
+y_pred = np.argmax(predict, 1)  
+predicted_emo = []   
+for i in range(0,test_y.shape[0]):  
+   emo = emotions[y_pred[i]]  
+   predicted_emo.append(emo)
 
-## get actual emotion
-#actual_emo = []  
-##y_true = np.argmax(test_y, 1)  
-#y_true = test_y
-#for i in range(0,test_y.shape[0]):
-#    emo = emotions[y_true[i]]  
-#    actual_emo.append(emo)
+# get actual emotion
+actual_emo = []  
+#y_true = np.argmax(test_y, 1)  
+y_true = test_y
+for i in range(0,test_y.shape[0]):
+   emo = emotions[y_true[i]]  
+   actual_emo.append(emo)
 
-## generate the confusion matrix  
-#cm = confusion_matrix(actual_emo, predicted_emo)
-#cm = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
+# generate the confusion matrix  
+cm = confusion_matrix(actual_emo, predicted_emo)
+cm = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
 
-##index = ['angry', 'calm', 'fearful', 'happy', 'neutral', 'sad']  
-##columns = ['angry', 'calm', 'fearful', 'happy', 'neutral', 'sad']  
+# index = ['angry', 'calm', 'fearful', 'happy', 'neutral', 'sad']  
+# columns = ['angry', 'calm', 'fearful', 'happy', 'neutral', 'sad']  
 ##cm_df = pd.DataFrame(cm, index, columns)
 ##plt.figure(figsize=(10, 6))  
 ##sns.heatmap(cm_df, annot=True)
 ##plt.savefig('song_librosa_hfs.svg')
-#print("UAR: ", cm.trace()/cm.shape[0])
+print("Accurary: ", accuracy_score(test_y, y_pred))
+print("UAR: ", cm.trace()/cm.shape[0])
 

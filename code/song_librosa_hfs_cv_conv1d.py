@@ -98,3 +98,6 @@ cm = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
 #plt.savefig('song_librosa_hfs.svg')
 print("UAR: ", cm.trace()/cm.shape[0])
 
+# to plo model
+# plot_model(model, 'model_gru_2.pdf', show_shapes=True,
+# show_layer_names=False)
