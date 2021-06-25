@@ -81,8 +81,9 @@ Before running any code you must activate the conda environment:
 
     source activate REPO_NAME
 
-To reproduce result in , run the following in order:  
+To reproduce result,  run the following in order:  
 ```bash
+# First download the dataset
 ```
 
 
