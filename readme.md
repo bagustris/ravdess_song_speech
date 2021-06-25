@@ -1,4 +1,4 @@
-# A repository for the paper *"On The Differences Between Song and Speech Emotion Recognition: Effect of Feature Sets, Feature Types, and Classifier"*
+### A repository for the paper *"On The Differences Between Song and Speech Emotion Recognition: Effect of Feature Sets, Feature Types, and Classifier"*
 
 by
 Bagus Tris Atmaja,
@@ -46,11 +46,11 @@ See the `README.md` files in each directory for a full description.
 You can download a copy of all the files in this repository by cloning the
 [git](https://git-scm.com/) repository:
 
-    git clone https://github.com/bagustris/paper_template.git
+    git clone https://github.com/bagustris/ravdess_song_speech.git
 
-or [download a zip archive](https://github.com/bagustris/paper_template).
+or [download a zip archive](https://github.com/bagustris/avdess_song_speech).
 
-A copy of the repository is also archived at *insert DOI here*
+The formal paper is available at *10.1109/TENCON50793.2020.9293852*
 
 
 ## Dependencies
