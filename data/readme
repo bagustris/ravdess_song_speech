@@ -1,0 +1,7 @@
+X: notation for input feature for SPEECH
+y: notation for labels
+song: notation for input feature for SONG
+librosa: librosa feature LLD
+paa: pyaudioanalysis LLD
+gemaps: eGEMAPS LLD
+hsf: high-level statistical functions

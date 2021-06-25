@@ -77,15 +77,28 @@ dependencies in it:
 
 ## Reproducing the results
 
-Before running any code you must activate the conda environment:
+Before running any code you must activate the python environment:
 
-    source activate REPO_NAME
+    source venv/bin/activate
 
-To reproduce result,  run the following in order:  
+Then, start IPython (install it first when not installed).  
+To reproduce result,  run the following codes in `code` in order:  
+
 ```bash
-# First download the dataset
+# First download the dataset (speech and song)
+# https://zenodo.org/record/1188976#.YNVyo3UzZ1Y
+# run feature extraction, e.g., 
+run extract_librosa_lld_hsf.py
+# run classification program, e.g, song emotion recognition with LSTM and HSF
+run song_librosa_hsf.py
+# to plot confusion matrix, uncomment bottom part of previous code
+# to experiment with different classifier, e.g
+run song_librosa_hsf
 ```
 
+There is two *.npy files in the `code` directory to experiment with. Move these
+files into `data` directory first or adjust the related code (.py file)
+accordingly.
 
 ## License
 

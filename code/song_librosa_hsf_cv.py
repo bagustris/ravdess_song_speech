@@ -3,7 +3,7 @@
 # load needed modules
 import numpy as np
 from keras.models import Sequential  
-from keras.layers import Dense, Activation, Flatten, CuDNNLSTM, Flatten 
+from keras.layers import Dense, Activation, Flatten, LSTM, Flatten 
 from keras.layers import Dropout, BatchNormalization, Bidirectional
 from sklearn.model_selection import train_test_split  
 from sklearn.metrics import confusion_matrix  
@@ -22,8 +22,8 @@ rn.seed(123)
 tf.set_random_seed(123)
 
 # load feature data
-X=np.load('song_librosa_hfs.npy')  
-y=np.load('label_gemaps.npy')
+X=np.load('../data/song_librosa_hsf.npy', allow_pickle=True)  
+y=np.load('../data/label_gemaps.npy', allow_pickle=True)
 X = np.array([np.hstack(x) for x in X])
 X = X.reshape((X.shape[0], 1, X.shape[1]))
 
@@ -34,13 +34,13 @@ y = label_encoder.fit_transform(np.argmax(y, axis=1))
 earlystop = EarlyStopping(monitor='val_loss', patience=50, restore_best_weights=True)
 checkpointer = ModelCheckpoint(filepath='/tmp/weights.hdf5', verbose=1, save_best_only=True)# make prediction for confusion_matrix
 
-# function to define model
+# function to define model, use LSTM instead of CuDNNLSTM
 def create_model():  
     model = Sequential()
     model.add(BatchNormalization(axis=-1, input_shape=(X.shape[1], X.shape[2])))
-    model.add(CuDNNLSTM(256, return_sequences=True))  
-    model.add(CuDNNLSTM(256, return_sequences=True))
-    model.add(CuDNNLSTM(256, return_sequences=True))
+    model.add(LSTM(256, return_sequences=True))  
+    model.add(LSTM(256, return_sequences=True))
+    model.add(LSTM(256, return_sequences=True))
     model.add(Flatten())
     model.add(Dropout(0.4))
     model.add(Dense(8, activation='softmax')) #unit must match n classes

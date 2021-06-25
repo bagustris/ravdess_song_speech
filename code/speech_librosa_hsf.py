@@ -21,8 +21,8 @@ import tensorflow as tf
 #tf.set_random_seed(123)
 
 # load feature data
-X=np.load('X_librosa_hfs.npy')  
-y=np.load('y.npy')
+X = np.load('X_librosa_hsf.npy')  
+y = np.load('y.npy')
 X = X.reshape((X.shape[0], 1, X.shape[1]))
 train_x, test_x, train_y, test_y = train_test_split(X, y, test_size=0.1)
 

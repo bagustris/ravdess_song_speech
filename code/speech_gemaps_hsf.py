@@ -12,24 +12,27 @@ import matplotlib.pyplot as plt
 from sklearn.preprocessing import StandardScaler
 
 # load feature data
-X = np.load('X_paa_hfs_old.npy')
-y = np.load('y.npy')   #y_egemaps if feat_mean_std
-
-scaler = StandardScaler(with_std=False)
-#X = scaler.fit_transform(X)
-
-## z-score normalization
-ori_aud_features = X
-norm_aud_features = []
-for aud_original in ori_aud_features:
-    aud_original_np = np.asarray(aud_original)
-    z_norm_aud = (aud_original_np - aud_original_np.mean()) / aud_original_np.std()
-    norm_aud_features.append(np.around(z_norm_aud, 6))
-
-X = np.array(norm_aud_features)
+X = np.load('X_gemaps_hsf.npy')
+y = np.load('y_egemaps.npy')  
 
 X = X.reshape(X.shape[0], 1, X.shape[1])
-train_x, test_x, train_y, test_y = train_test_split(X, y, test_size=0.1)
+
+# z-score normalization
+ori_aud_features = X
+norm_aud_features = []
+
+#for aud_original in ori_aud_features:
+#    aud_original_np = np.asarray(aud_original)
+#    z_norm_aud = (aud_original_np - aud_original_np.mean()) / aud_original_np.std()
+#    norm_aud_features.append(np.around(z_norm_aud, 6))
+
+#X = np.array(norm_aud_features)
+
+train_x, test_x, train_y, test_y = train_test_split(X, y, test_size=0.1, random_state=42)
+
+# DNN layer units
+n_dim = np.array(train_x).shape[2]  
+n_classes = np.array(train_y).shape[1]  
 
 ## normalize data
 #mean = train_x.reshape(504172, 23).mean(axis=0)
@@ -48,8 +51,8 @@ def create_model():
     model.add(LSTM(256, return_sequences=True))
     model.add(Flatten())
     model.add(Dropout(0.4))
-    model.add(Dense(8, activation='softmax'))
-
+    model.add(Dense(n_classes, activation='softmax'))
+              
     # model compilation  
     model.compile(loss='categorical_crossentropy', optimizer='rmsprop', metrics=['accuracy'])  
     return model
@@ -59,9 +62,7 @@ model = create_model()
 print(model.summary())
 
 # train the model  
-#earlystop = EarlyStopping(monitor='val_accuracy', patience=100, restore_best_weights=True)
-hist = model.fit(train_x, train_y, epochs=200, 
-                 batch_size=16) #, validation_split=0.1) #, callbacks=[earlystop])
+hist = model.fit(train_x, train_y, epochs=200, batch_size=16)
 
 # evaluate model, test data may differ from validation data
 #evaluate = model.evaluate(test_x, test_y, batch_size=16)
@@ -97,6 +98,6 @@ cm = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
 #cm_df = pd.DataFrame(cm, index, columns)
 #plt.figure(figsize=(10, 6))  
 #sns.heatmap(cm_df, annot=True)
-#filename = os.path.basename("__file__")[:-3] +  '.svg'
-plt.savefig('speech_paa_hfs.svg')
+#filename = os.path.basename(__file__)[:-3] +  '.svg'
+#plt.savefig(filename)
 print("UAR: ", cm.trace()/cm.shape[0])

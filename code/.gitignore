@@ -1,0 +1,4 @@
+*.bak
+*~
+./data_d/*
+./data/*.npy

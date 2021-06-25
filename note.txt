@@ -1,4 +1,4 @@
 todo:  
 - shows tree
-- explain why fig is located iside latex
+- explain why fig is located inside latex
 
