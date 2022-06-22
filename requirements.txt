@@ -1,5 +1,5 @@
 tensorflow==1.15.5
-numpy==1.18.5
+numpy==1.22.0
 librosa==0.8.0
 
 
